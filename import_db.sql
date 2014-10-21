@@ -23,12 +23,12 @@ CREATE TABLE question_followers (
 CREATE TABLE replies (
   id INTEGER PRIMARY KEY,
   body VARCHAR(255) NOT NULL,
-  subject INTEGER NOT NULL,
-  parent INTEGER,
-  responder INTEGER NOT NULL,
-  FOREIGN KEY (subject) REFERENCES questions(id),
-  FOREIGN KEY (parent) REFERENCES replies(id),
-  FOREIGN KEY (responder) REFERENCES users(id)
+  question INTEGER NOT NULL,
+  parent_reply INTEGER,
+  author INTEGER NOT NULL,
+  FOREIGN KEY (question) REFERENCES questions(id),
+  FOREIGN KEY (parent_reply) REFERENCES replies(id),
+  FOREIGN KEY (author) REFERENCES users(id)
 );
 
 CREATE TABLE question_likes (
@@ -58,15 +58,17 @@ VALUES
   ((SELECT id FROM questions WHERE title = 'Bomb'),
    (SELECT id FROM users WHERE fname = 'sarah')),
   ((SELECT id FROM questions WHERE title = 'Child'),
-   (SELECT id FROM users WHERE fname = 'john'));
+   (SELECT id FROM users WHERE fname = 'john')),
+  ((SELECT id FROM questions WHERE title = 'Child'),
+  (SELECT id FROM users WHERE fname = 'sarah'));
    
 INSERT INTO
-  replies (body, subject, parent, responder)
+  replies (body, question, parent_reply, author)
 VALUES
   ("I don't know where your child is.", (SELECT id FROM questions WHERE title = 'Child'),
    NULL, (SELECT id FROM users WHERE fname = 'john')),
   ("Your child is with me", (SELECT id FROM questions WHERE title = 'Child'),
-   (SELECT id FROM replies WHERE body = "I don't know where your child is."),
+   1,
    (SELECT id FROM users WHERE fname = 'sarah'));
    
 INSERT INTO

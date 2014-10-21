@@ -38,42 +38,14 @@ class User
   end
   
   def authored_questions
-    query = <<-SQL
-      SELECT
-        id
-      FROM
-        questions
-      WHERE
-        author = ?
-    SQL
-    
-    array_hashes = QuestionsDatabase.instance.execute(query, @id)
-    questions = []
-    array_hashes.each do |hash_question|
-      id_question = hash_question['id']
-      questions << Question::find_by_id(id_question)
-    end
-      
-    questions
+    Question::find_by_author_id(@id)
   end
   
   def authored_replies
-    query = <<-SQL
-      SELECT
-        id
-      FROM
-        replies
-      WHERE
-        responder = ?
-    SQL
-    
-    array_hashes = QuestionsDatabase.instance.execute(query, @id)
-    replies = []
-    array_hashes.each do |hash_reply|
-      id_reply = hash_reply['id']
-      replies << Reply::find_by_id(id_reply)
-    end
-      
-    replies
+    Reply::find_by_user_id(@id)
+  end
+  
+  def followed_questions
+    QuestionFollower::followed_questions_for_user_id(@id)
   end
 end
