@@ -78,4 +78,33 @@ class Reply
       
     replies
   end
+  
+  def save
+    if @id.nil?
+      params = [@body, @question, @parent_reply, @author]
+      QuestionsDatabase.instance.execute(<<-SQL, *params)
+        INSERT INTO
+          replies (body, question, parent_reply, author)
+        VALUES
+          (?, ?, ?, ?)
+      SQL
+         
+      @id = QuestionsDatabase.instance.last_insert_row_id
+    
+    else
+      param_hash = { :body => @body, :question => @question, :author => @author,
+                     :parent_reply => @parent_reply, :id => @id}
+      QuestionsDatabase.instance.execute(<<-SQL, param_hash)
+        UPDATE
+          replies
+        SET
+          body = :body,
+          question = :question,
+          author = :author,
+          parent_reply = :parent_reply
+        WHERE
+          id = :id
+      SQL
+    end
+  end
 end

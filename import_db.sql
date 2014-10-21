@@ -50,7 +50,8 @@ INSERT INTO
   questions (title, body, author)
 VALUES
   ('Bomb', 'Where is the bomb?', (SELECT id FROM users WHERE fname = 'john')),
-  ('Child', 'Have you seen my child?', (SELECT id FROM users WHERE fname = 'derek'));
+  ('Child', 'Have you seen my child?', (SELECT id FROM users WHERE fname = 'derek')),
+  ('Karma', 'How is my karma now?', (SELECT id FROM users WHERE fname = 'derek'));
   
 INSERT INTO
   question_followers (question, follower)
@@ -77,4 +78,6 @@ VALUES
   ((SELECT id FROM questions WHERE title = 'Bomb'),
    (SELECT id FROM users WHERE fname = 'derek')),
   ((SELECT id FROM questions WHERE title = 'Child'),
-   (SELECT id FROM users WHERE fname = 'sarah'));
+   (SELECT id FROM users WHERE fname = 'sarah')),
+  ((SELECT id FROM questions WHERE title = 'Child'),
+   (SELECT id FROM users WHERE fname = 'derek'));

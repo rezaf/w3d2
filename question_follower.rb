@@ -41,7 +41,7 @@ class QuestionFollower
   def self.followed_questions_for_user_id(user_id)
     query = <<-SQL
     SELECT
-    q.id, q.title, q.body, q.author
+      q.id, q.title, q.body, q.author
     FROM
       questions AS q
     JOIN
@@ -64,7 +64,7 @@ class QuestionFollower
   def self.most_followed_questions(n)
     query = <<-SQL
     SELECT
-      *
+      q.id, q.title, q.body, q.author
     FROM
       questions AS q
     JOIN
