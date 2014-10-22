@@ -114,4 +114,28 @@ class User
       
     end
   end
+  
+  def new_save
+    names_var = []
+    inst_var = self.instance_variables.map do |variable|
+      var_string = variable.to_s.gsub(/[@]/, '')
+      names_var << var_string
+      variable.to_s.gsub!(/[@]/, '').to_s
+    end
+    
+    params = []
+    inst_var.each do |var|
+      params << self.method(var).call
+    end
+    
+    p names_var
+    p params
+    
+    var_hash = {}
+    params.each_index do |index|
+      var_hash[params[index]] = names_var[index]
+    end
+    
+    self.save(var_hash)  
+  end
 end

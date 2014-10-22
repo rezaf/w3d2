@@ -1,3 +1,4 @@
+require_relative 'class_save'
 require_relative 'questions_database'
 require_relative 'user'
 require_relative 'question'
@@ -11,8 +12,8 @@ require_relative 'question_like'
 # p Reply::find_by_id(1)
 # p QuestionLike::find_by_id(1)
 
-# user = User::find_by_id(4)
-# p user
+user = User::find_by_id(4)
+user.new_save
 
 # question = Question::find_by_id(1)
 # p question.likers
@@ -46,3 +47,5 @@ require_relative 'question_like'
 # reply = Reply.new({"body" => "Good match today!", "question" => 4, "author" => 1})
 # reply.save
 # p reply
+
+
