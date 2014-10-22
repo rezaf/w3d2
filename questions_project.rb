@@ -13,17 +13,21 @@ require_relative 'question_like'
 # p QuestionLike::find_by_id(1)
 
 user = User::find_by_id(4)
+user.fname = "David"
+user.lname = "Villa"
+p user
 user.new_save
+p user
 
 # question = Question::find_by_id(1)
 # p question.likers
 # p question.num_likes
 
-# reply = Reply::find_by_id(3)
-# reply.body = "great match today"
-# p reply
-# reply.save
-# p reply
+reply = Reply::find_by_id(3)
+reply.body = "great day for tuesday"
+p reply
+reply.new_save
+p reply
 
 # p QuestionFollower::followers_for_question_id(2)
 # p Question::most_followed(2)
@@ -37,12 +41,11 @@ user.new_save
 # p user.average_karma
 
 
-# question = Question::find_by_id(4)
-# p question
-# question.body = "I've just found my id!!"
-# p question
-# question.save
-# p question
+question = Question::find_by_id(4)
+question.body = "this is working!!"
+p question
+question.new_save
+p question
 
 # reply = Reply.new({"body" => "Good match today!", "question" => 4, "author" => 1})
 # reply.save
